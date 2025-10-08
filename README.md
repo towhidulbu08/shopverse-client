@@ -1,16 +1,108 @@
-# React + Vite
+# ShopVerse
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ShopVerse is a modern e-commerce web application frontend built with **React** and **Vite**.  
+It provides a fast, responsive, and scalable setup for building full-stack applications.
 
-Currently, two official plugins are available:
+## Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ShopVerse allows users to browse products, add them to the cart, and place orders.  
+It also supports an admin panel for managing products and orders. This frontend is designed to work seamlessly with a Node.js + Express backend.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React ^19.1.1, Vite ^7.1.7  
+- **Backend:** Node.js + Express (separate repo)  
+- **State Management:** React state/hooks (useState, useReducer, context)  
+- **Styling:** Tailwind CSS / custom CSS  
+- **Linting:** ESLint with React Hooks plugin  
+- **Other tools:** Cookie parsing (cookie-parser), CORS support
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### User Side
+- Product listing with category filtering and sorting
+- Cart management (add/remove products)
+- Checkout page with order placement
+- Authentication with JWT
+- Responsive UI
+
+### Admin Side
+- Manage products (add, update, delete)
+- Manage order status
+- Access restricted to admin users
+
+## Scripts
+
+- `npm run dev` – Start development server with HMR  
+- `npm run build` – Build production-ready frontend  
+- `npm run preview` – Preview production build  
+- `npm run lint` – Run ESLint for code quality checks
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone <your-frontend-repo-url>
+Install dependencies:
+
+cd client
+npm install
+Start the development server:
+
+npm run dev
+Environment Variables
+Create a .env file in the backend folder and add:
+
+env
+
+MONGODB_URI=<your_mongodb_connection_string>
+PORT=5000
+JWT_SECRET=<your_jwt_secret>
+Frontend communicates with backend via the configured API endpoint.
+
+Project Structure
+csharp
+Copy code
+client/
+├─ public/          # Static assets
+├─ src/
+│  ├─ components/   # Reusable React components
+│  ├─ pages/        # Application pages
+│  ├─ App.jsx       # Root component
+│  └─ main.jsx      # Entry point
+├─ package.json
+└─ vite.config.js
+Key Learnings & Interview Highlights
+React Fundamentals: Component architecture, hooks, props, state management
+
+Frontend Routing & State: Conditional rendering, useReducer, context API
+
+API Integration: Fetching data from Express backend, handling responses
+
+Authentication & Authorization: JWT-based login and role-based access
+
+Performance: Optimized rendering, Vite dev server, and production builds
+
+Best Practices: ESLint rules, code structure, reusable components
+
+Deployment
+Frontend deployed on Vercel or Netlify
+
+Backend deployed on Render or Heroku
+
+ShopVerse demonstrates a full-stack-ready e-commerce application and showcases your frontend skills effectively in interviews.
+
+pgsql
+Copy code
+
+---
+
+If you want, I can also create a **shorter “interview one-pager README” version** that is **perfect to show on GitHub for recruiters**—highlighting skills, tech, and features without overwhelming details.  
+
+Do you want me to make that version too?
+
+
+
+
+
+
