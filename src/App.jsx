@@ -17,7 +17,7 @@ import UserListing from "./pages/user-view/listing";
 import UnauthPage from "./pages/unauth-page/unauth-page";
 
 function App() {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   const user = {
     name:'Tamim',
     role:"admin"
