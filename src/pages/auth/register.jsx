@@ -4,6 +4,7 @@ import { registerUser } from "@/store/auth-slice/slice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const initialState = {
   userName: "",
@@ -21,8 +22,23 @@ const AuthRegister = () => {
     e.preventDefault();
 
     dispatch(registerUser(formData)).then((data) => {
-      if(data?.payload?.success) {
-        navigate("/auth/login");  
+      if (data?.payload?.success) {
+        toast.success(data?.payload?.message);
+        navigate("/auth/login");
+      } else {
+        toast.error(data?.payload?.message || "Registration failed", {
+          position: "top-right",
+          style: {
+            background: "red",
+            color: "white",
+            display: "flex",
+            justifyContent: "center", // centers horizontally
+            alignItems: "center", // centers vertically
+           
+            borderRadius: "8px",
+            
+          },
+        });
       }
     });
   }

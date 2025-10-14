@@ -1,7 +1,10 @@
 import CommonForm from "@/components/common/form";
 import { loginFormControls } from "@/config";
+import { loginUser } from "@/store/auth-slice/slice";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 const initialState = {
   email: "",
@@ -10,6 +13,32 @@ const initialState = {
 
 const AuthLogin = () => {
   const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
+
+  function onsubmit(e) {
+    e.preventDefault();
+    dispatch(loginUser(formData)).then((data) => {
+      if (data?.payload?.success) {
+        toast.success(data?.payload?.message, {
+          style: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        });
+      } else {
+        toast.error(data?.payload?.message || "Registration failed", {
+          style: {
+            background: "red",
+            color: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        });
+      }
+    });
+  }
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
@@ -31,6 +60,7 @@ const AuthLogin = () => {
         buttonText={"Login"}
         formData={formData}
         setFormData={setFormData}
+        onSubmit={onsubmit}
       />
     </div>
   );

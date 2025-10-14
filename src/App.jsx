@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Adminlayout from "./components/admin-view/layout";
 import Authlayout from "./components/auth/layout";
@@ -10,19 +11,14 @@ import AdminProducts from "./pages/admin-view/products";
 import AuthLogin from "./pages/auth/login";
 import AuthRegister from "./pages/auth/register";
 import NotFound from "./pages/not-found/notFound";
+import UnauthPage from "./pages/unauth-page/unauth-page";
 import UserAccount from "./pages/user-view/account";
 import UserCheckout from "./pages/user-view/checkout";
 import UserHome from "./pages/user-view/home";
 import UserListing from "./pages/user-view/listing";
-import UnauthPage from "./pages/unauth-page/unauth-page";
 
 function App() {
-  const isAuthenticated = false;
-  const user = {
-    name:'Tamim',
-    role:"admin"
-
-  };
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   return (
     <>
       <div className="flex flex-col overflow-hidden bg-white">
@@ -66,7 +62,7 @@ function App() {
 
             <Route path="account" element={<UserAccount />} />
           </Route>
-          <Route path="/unauth-page" element={<UnauthPage/>}/>
+          <Route path="/unauth-page" element={<UnauthPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

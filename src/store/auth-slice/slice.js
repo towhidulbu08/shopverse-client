@@ -6,18 +6,54 @@ const initialState = {
   user: null,
 };
 
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (formdata, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        formdata,
+        {
+          withCredentials: true,
+        }
+      );
 
- export const registerUser = createAsyncThunk( "auth/register",
-  async (formdata) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/register",
-      formdata,
-      {
-        withCredentials: true,
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue({
+          success: false,
+          message: error.message || "Unknown error occurred",
+        });
       }
-    );
+    }
+  }
+);
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (formdata, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formdata,
+        {
+          withCredentials: true,
+        }
+      );
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue({
+          success: false,
+          message: error.message || "Unknown error occurred",
+        });
+      }
+    }
   }
 );
 
@@ -27,23 +63,40 @@ const authSlice = createSlice({
   reducers: {
     setUser: (state, action) => {},
   },
-  extraReducers:(builder)=>{
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
 
-    builder.addCase(registerUser.pending,(state)=>{
-         state.isLoading=true
-    })
-    .addCase(registerUser.fulfilled,(state,action)=>{
-      state.isLoading=false
-      state.user=null
-      state.isAuthenticated=false
-    })
-    .addCase(registerUser.rejected,(state,action)=>{
-      state.isLoading=false
-      state.user=null
-      state.isAuthenticated=false
-    })
-    
-  }
+      .addCase(loginUser.pending, (state, action) => {
+        console.log("action in pending", action);
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        console.log("action", action);
+        state.isLoading = false;
+        state.user = action.payload.success ? action.payload.user : null;
+        state.isAuthenticated = action.payload.success
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        console.log(action);
+
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      });
+  },
 });
 
 export const { setUser } = authSlice.actions;
