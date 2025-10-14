@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Adminlayout from "./components/admin-view/layout";
 import Authlayout from "./components/auth/layout";
@@ -16,9 +17,27 @@ import UserAccount from "./pages/user-view/account";
 import UserCheckout from "./pages/user-view/checkout";
 import UserHome from "./pages/user-view/home";
 import UserListing from "./pages/user-view/listing";
+import { checkAuth } from "./store/auth-slice/slice";
 
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, isLoading } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  if (isLoading)
+    return (
+      <div className="flex flex-col justify-center items-center min-h-screen space-y-2">
+        <div className="w-10 h-10 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-gray-600 font-medium">Loading...</p>
+      </div>
+    );
+
+  // console.log(isLoading, user);
   return (
     <>
       <div className="flex flex-col overflow-hidden bg-white">
